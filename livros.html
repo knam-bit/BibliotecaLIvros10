@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KT Books | Livros</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4eee7;
+            color: #3e2c20;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #4b3023;
+            color: white;
+            padding: 28px 16px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            display: block;
+            margin-top: 7px;
+            color: #d8c0aa;
+            font-size: 12px;
+        }
+
+        .menu {
+            list-style: none;
+        }
+
+        .menu li {
+            margin-bottom: 7px;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            padding: 14px 15px;
+            border-radius: 8px;
+            color: #e7d8ca;
+            text-decoration: none;
+            transition: .3s;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: #6b4734;
+            color: #fff;
+        }
+
+        .main {
+            margin-left: 250px;
+            padding: 32px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .topbar h2 {
+            font-size: 28px;
+            color: #4b3023;
+        }
+
+        .topbar p {
+            color: #8a6b56;
+            margin-top: 5px;
+        }
+
+        .user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #4b3023;
+        }
+
+        .user-avatar {
+            width: 43px;
+            height: 43px;
+            background: #8a5f43;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .btn {
+            background: #6b4734;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background: #4b3023;
+        }
+
+        .filters {
+            background: #fffaf5;
+            border: 1px solid #eaded2;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .filters input,
+        .filters select {
+            padding: 11px 13px;
+            border: 1px solid #d8c0aa;
+            border-radius: 7px;
+            outline: none;
+            background: white;
+            color: #594235;
+        }
+
+        .filters input {
+            flex: 1;
+        }
+
+        .section {
+            background: #fffaf5;
+            border: 1px solid #eaded2;
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .table-header h3 {
+            color: #4b3023;
+            font-size: 18px;
+        }
+
+        .table-header span {
+            color: #9a806c;
+            font-size: 13px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            color: #9a806c;
+            font-size: 12px;
+            padding: 13px;
+            border-bottom: 1px solid #eaded2;
+        }
+
+        td {
+            padding: 16px 13px;
+            border-bottom: 1px solid #f0e7df;
+            font-size: 14px;
+        }
+
+        .book-info strong {
+            color: #4b3023;
+        }
+
+        .book-info small {
+            display: block;
+            color: #9a806c;
+            margin-top: 4px;
+        }
+
+        .status {
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+        }
+
+        .disponivel {
+            background: #e6dccf;
+            color: #5d4939;
+        }
+
+        .emprestado {
+            background: #ead2c8;
+            color: #814638;
+        }
+
+        .reservado {
+            background: #ddd5ca;
+            color: #62574d;
+        }
+
+        .acoes {
+            display: flex;
+            gap: 8px;
+        }
+
+        .acao {
+            border: 1px solid #d8c0aa;
+            background: #fffaf5;
+            color: #6b4734;
+            padding: 7px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .acao:hover {
+            background: #f5ebe2;
+        }
+
+        @media (max-width: 1000px) {
+            .filters {
+                flex-wrap: wrap;
+            }
+
+            .filters input {
+                width: 100%;
+                flex: none;
+            }
+
+            .section {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 900px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .sidebar {
+                width: 190px;
+            }
+
+            .main {
+                margin-left: 190px;
+                padding: 20px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h1>KT Books</h1>
+            <span>Sistema de gerenciamento</span>
+        </div>
+
+        <ul class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="usuarios.html">Usuários</a></li>
+            <li><a href="livros.html" class="active">Livros</a></li>
+            <li><a href="emprestimo.html">Empréstimos</a></li>
+            <li><a href="historico.html">Histórico</a></li>
+            <li><a href="multas.html">Multas</a></li>
+        </ul>
+
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <div>
+                <h2>Livros</h2>
+                <p>Gerencie o acervo da biblioteca</p>
+            </div>
+
+            <div class="user">
+                <strong>Administrador</strong>
+                <div class="user-avatar">KT</div>
+            </div>
+        </div>
+
+        <div class="filters">
+
+            <input type="text" placeholder="Buscar por título, autor ou ISBN">
+
+            <select>
+                <option>Todos os livros</option>
+                <option>Disponíveis</option>
+                <option>Emprestados</option>
+                <option>Reservados</option>
+            </select>
+          
+            <button class="btn">Novo livro</button>
+
+        </div>
+
+        <section class="section">
+
+            <div class="table-header">
+                <h3>Acervo de livros</h3>
+                <span>1.245 livros</span>
+            </div>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Livro</th>
+                        <th>Autor</th>
+                        <th>ISBN</th>
+                        <th>Categoria</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>
+                            <div class="book-info">
+                                <strong>Dom Casmurro</strong>
+                                <small>Machado de Assis</small>
+                            </div>
+                        </td>
+                        <td>Machado de Assis</td>
+                        <td>9788535910663</td>
+                        <td>Literatura</td>
+                        <td><span class="status disponivel">Disponível</span></td>
+                        <td>
+                            <div class="acoes">
+                                <button class="acao">Editar</button>
+                                <button class="acao">Detalhes</button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="book-info">
+                                <strong>O Pequeno Príncipe</strong>
+                                <small>Antoine de Saint-Exupéry</small>
+                            </div>
+                        </td>
+                        <td>Antoine de Saint-Exupéry</td>
+                        <td>9788522031448</td>
+                        <td>Infantil</td>
+                        <td><span class="status emprestado">Emprestado</span></td>
+                        <td>
+                            <div class="acoes">
+                                <button class="acao">Editar</button>
+                                <button class="acao">Detalhes</button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="book-info">
+                                <strong>1984</strong>
+                                <small>George Orwell</small>
+                            </div>
+                        </td>
+                        <td>George Orwell</td>
+                        <td>9788535914849</td>
+                        <td>Ficção</td>
+                        <td><span class="status disponivel">Disponível</span></td>
+                        <td>
+                            <div class="acoes">
+                                <button class="acao">Editar</button>
+                                <button class="acao">Detalhes</button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="book-info">
+                                <strong>Harry Potter e a Pedra Filosofal</strong>
+                                <small>J. K. Rowling</small>
+                            </div>
+                        </td>
+                        <td>J. K. Rowling</td>
+                        <td>9788532530786</td>
+                        <td>Fantasia</td>
+                        <td><span class="status reservado">Reservado</span></td>
+                        <td>
+                            <div class="acoes">
+                                <button class="acao">Editar</button>
+                                <button class="acao">Detalhes</button>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</body>
+</html>
