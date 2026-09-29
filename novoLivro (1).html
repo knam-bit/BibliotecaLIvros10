@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KT Books | Novo Livro</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4eee7;
+            color: #3e2c20;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #4b3023;
+            padding: 28px 16px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 45px;
+            color: white;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            display: block;
+            margin-top: 7px;
+            color: #d8c0aa;
+            font-size: 12px;
+        }
+
+        .menu {
+            list-style: none;
+        }
+
+        .menu li {
+            margin-bottom: 7px;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            padding: 14px 15px;
+            border-radius: 8px;
+            color: #e7d8ca;
+            text-decoration: none;
+            transition: .3s;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: #6b4734;
+            color: white;
+        }
+
+        .main {
+            margin-left: 250px;
+            padding: 32px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .topbar h2 {
+            color: #4b3023;
+            font-size: 28px;
+        }
+
+        .topbar p {
+            color: #8a6b56;
+            margin-top: 5px;
+        }
+
+        .user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #4b3023;
+        }
+
+        .user-avatar {
+            width: 43px;
+            height: 43px;
+            background: #8a5f43;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .form-container {
+            max-width: 900px;
+            background: #fffaf5;
+            border: 1px solid #eaded2;
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .form-title {
+            margin-bottom: 25px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid #eaded2;
+        }
+
+        .form-title h3 {
+            color: #4b3023;
+            font-size: 19px;
+        }
+
+        .form-title p {
+            color: #9a806c;
+            font-size: 13px;
+            margin-top: 6px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 13px;
+            color: #594235;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 13px;
+            border: 1px solid #d8c0aa;
+            border-radius: 7px;
+            outline: none;
+            background: white;
+            color: #594235;
+            font-size: 14px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #8a5f43;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eaded2;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-cancelar {
+            background: transparent;
+            border: 1px solid #d8c0aa;
+            color: #6b4734;
+        }
+
+        .btn-salvar {
+            background: #6b4734;
+            border: 1px solid #6b4734;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: .9;
+        }
+
+        @media (max-width: 800px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .sidebar {
+                width: 190px;
+            }
+
+            .main {
+                margin-left: 190px;
+                padding: 20px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h1>KI Books</h1>
+            <span>Sistema de gerenciamento</span>
+        </div>
+
+        <ul class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="usuarios.html">Usuários</a></li>
+            <li><a href="livros.html" class="active">Livros</a></li>
+            <li><a href="emprestimos.html">Empréstimos</a></li>
+            <li><a href="historico.html">Histórico</a></li>
+            <li><a href="multas.html">Multas</a></li>
+        </ul>
+
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <div>
+                <h2>Novo Livro</h2>
+                <p>Cadastre um novo livro no acervo</p>
+            </div>
+
+            <div class="user">
+                <strong>Administrador</strong>
+                <div class="user-avatar">KT</div>
+            </div>
+        </div>
+
+        <div class="form-container">
+
+            <div class="form-title">
+                <h3>Informações do livro</h3>
+                <p>Preencha os dados abaixo para adicionar um livro ao acervo.</p>
+            </div>
+
+            <form>
+
+                <div class="form-grid">
+
+                    <div class="form-group full">
+                        <label for="titulo">Título do livro</label>
+                        <input type="text" id="titulo" name="titulo" placeholder="Digite o título do livro">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="autor">Autor</label>
+                        <input type="text" id="autor" name="autor" placeholder="Digite o nome do autor">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="isbn">ISBN</label>
+                        <input type="text" id="isbn" name="isbn" placeholder="Digite o ISBN">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editora">Editora</label>
+                        <input type="text" id="editora" name="editora" placeholder="Digite a editora">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ano">Ano de publicação</label>
+                        <input type="number" id="ano" name="ano" placeholder="Ex.: 2024">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="categoria">Categoria</label>
+                        <select id="categoria" name="categoria">
+                            <option value="">Selecione</option>
+                            <option value="literatura">Literatura</option>
+                            <option value="romance">Romance</option>
+                            <option value="ficcao">Ficção</option>
+                            <option value="fantasia">Fantasia</option>
+                            <option value="aventura">Aventura</option>
+                            <option value="infantil">Infantil</option>
+                            <option value="didatico">Didático</option>
+                            <option value="tecnico">Técnico</option>
+                            <option value="outros">Outros</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantidade">Quantidade</label>
+                        <input type="number" id="quantidade" name="quantidade" min="1" placeholder="Quantidade de exemplares">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="localizacao">Localização</label>
+                        <input type="text" id="localizacao" name="localizacao" placeholder="Ex.: Estante A - Prateleira 2">
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="descricao">Descrição</label>
+                        <textarea id="descricao" name="descricao" placeholder="Digite uma breve descrição do livro"></textarea>
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+                    <a href="livros.html">
+                        <button type="button" class="btn btn-cancelar">Cancelar</button>
+                    </a>
+
+                    <button type="submit" class="btn btn-salvar">Cadastrar livro</button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
