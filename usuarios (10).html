@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KT Books | Usuários</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4eee7;
+            color: #3e2c20;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #4b3023;
+            padding: 28px 16px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 45px;
+            color: white;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            display: block;
+            margin-top: 7px;
+            color: #d8c0aa;
+            font-size: 12px;
+        }
+
+        .menu {
+            list-style: none;
+        }
+
+        .menu li {
+            margin-bottom: 7px;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            padding: 14px 15px;
+            border-radius: 8px;
+            color: #e7d8ca;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: #6b4734;
+            color: white;
+        }
+
+        .main {
+            margin-left: 250px;
+            padding: 32px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .topbar h2 {
+            color: #4b3023;
+            font-size: 28px;
+        }
+
+        .topbar p {
+            color: #8a6b56;
+            margin-top: 5px;
+        }
+
+        .user-admin {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #4b3023;
+        }
+
+        .user-avatar {
+            width: 43px;
+            height: 43px;
+            background: #8a5f43;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .search {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .search input {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #d8c0aa;
+            border-radius: 8px;
+            outline: none;
+            background: #fffaf5;
+            color: #594235;
+        }
+
+        .search input:focus {
+            border-color: #8a5f43;
+        }
+
+        .btn-novo {
+            padding: 13px 20px;
+            background: #6b4734;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn-novo:hover {
+            background: #573a2c;
+        }
+
+        .table-container {
+            background: #fffaf5;
+            border: 1px solid #eaded2;
+            border-radius: 12px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #eee2d6;
+        }
+
+        th {
+            padding: 16px;
+            text-align: left;
+            font-size: 13px;
+            color: #594235;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 16px;
+            border-top: 1px solid #eaded2;
+            font-size: 13px;
+            color: #6b5749;
+        }
+
+        tbody tr:hover {
+            background: #faf4ee;
+        }
+
+        .usuario {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .usuario-foto {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #c7a88f;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .usuario-info strong {
+            display: block;
+            color: #4b3023;
+            margin-bottom: 3px;
+        }
+
+        .usuario-info span {
+            font-size: 11px;
+            color: #9a806c;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            background: #e3eee4;
+            color: #4f6d52;
+        }
+
+        .acoes {
+            display: flex;
+            gap: 8px;
+        }
+
+        .acao {
+            padding: 7px 11px;
+            border: 1px solid #d8c0aa;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #6b4734;
+            font-size: 11px;
+            background: transparent;
+        }
+
+        .acao:hover {
+            background: #eee2d6;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 20px;
+            color: #8a6b56;
+            font-size: 12px;
+        }
+
+        .pages {
+            display: flex;
+            gap: 5px;
+        }
+
+        .page {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            color: #6b4734;
+            text-decoration: none;
+        }
+
+        .page.active {
+            background: #6b4734;
+            color: white;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .main {
+                margin-left: 200px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search {
+                max-width: none;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h1>KT Books</h1>
+            <span>Sistema de gerenciamento</span>
+        </div>
+
+        <ul class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="usuarios.html" class="active">Usuários</a></li>
+            <li><a href="livros.html">Livros</a></li>
+            <li><a href="emprestimos.html">Empréstimos</a></li>
+            <li><a href="historico.html">Histórico</a></li>
+            <li><a href="multas.html">Multas</a></li>
+        </ul>
+
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <div>
+                <h2>Usuários</h2>
+                <p>Gerencie os usuários cadastrados na biblioteca</p>
+            </div>
+
+            <div class="user-admin">
+                <strong>Administrador</strong>
+                <div class="user-avatar">KT</div>
+            </div>
+        </div>
+
+        <div class="toolbar">
+
+            <div class="search">
+                <input type="text" placeholder="Pesquisar usuário por nome, CPF ou matrícula">
+            </div>
+
+            <a href="novoUsuario.html" class="btn-novo">Novo usuário</a>
+
+        </div>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Usuário</th>
+                        <th>CPF</th>
+                        <th>E-mail</th>
+                        <th>Telefone</th>
+                        <th>Cadastro</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>
+                            <div class="usuario">
+                                <div class="usuario-foto">JS</div>
+                                <div class="usuario-info">
+                                    <strong>João da Silva</strong>
+                                    <span>Matrícula: 2026001</span>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>123.456.789-00</td>
+                        <td>joao@email.com</td>
+                        <td>(81) 99999-1111</td>
+                        <td>10/08/2026</td>
+                        <td><span class="status">Ativo</span></td>
+
+                        <td>
+                            <div class="acoes">
+                                <a href="#" class="acao">Editar</a>
+                                <a href="#" class="acao">Excluir</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="usuario">
+                                <div class="usuario-foto">MS</div>
+                                <div class="usuario-info">
+                                    <strong>Maria Santos</strong>
+                                    <span>Matrícula: 2026002</span>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>987.654.321-00</td>
+                        <td>maria@email.com</td>
+                        <td>(81) 98888-2222</td>
+                        <td>11/08/2026</td>
+                        <td><span class="status">Ativo</span></td>
+
+                        <td>
+                            <div class="acoes">
+                                <a href="#" class="acao">Editar</a>
+                                <a href="#" class="acao">Excluir</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="usuario">
+                                <div class="usuario-foto">PO</div>
+                                <div class="usuario-info">
+                                    <strong>Pedro Oliveira</strong>
+                                    <span>Matrícula: 2026003</span>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>456.789.123-00</td>
+                        <td>pedro@email.com</td>
+                        <td>(81) 97777-3333</td>
+                        <td>12/08/2026</td>
+                        <td><span class="status">Ativo</span></td>
+
+                        <td>
+                            <div class="acoes">
+                                <a href="#" class="acao">Editar</a>
+                                <a href="#" class="acao">Excluir</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="usuario">
+                                <div class="usuario-foto">AS</div>
+                                <div class="usuario-info">
+                                    <strong>Ana Souza</strong>
+                                    <span>Matrícula: 2026004</span>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>321.654.987-00</td>
+                        <td>ana@email.com</td>
+                        <td>(81) 96666-4444</td>
+                        <td>13/08/2026</td>
+                        <td><span class="status">Ativo</span></td>
+
+                        <td>
+                            <div class="acoes">
+                                <a href="#" class="acao">Editar</a>
+                                <a href="#" class="acao">Excluir</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="usuario">
+                                <div class="usuario-foto">LC</div>
+                                <div class="usuario-info">
+                                    <strong>Lucas Costa</strong>
+                                    <span>Matrícula: 2026005</span>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>654.321.987-00</td>
+                        <td>lucas@email.com</td>
+                        <td>(81) 95555-5555</td>
+                        <td>14/08/2026</td>
+                        <td><span class="status">Ativo</span></td>
+
+                        <td>
+                            <div class="acoes">
+                                <a href="#" class="acao">Editar</a>
+                                <a href="#" class="acao">Excluir</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+            <div class="pagination">
+                <span>Mostrando 1 a 5 de 25 usuários</span>
+
+                <div class="pages">
+                    <a href="#" class="page active">1</a>
+                    <a href="#" class="page">2</a>
+                    <a href="#" class="page">3</a>
+                    <a href="#" class="page">4</a>
+                    <a href="#" class="page">5</a>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
