@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KT Books | Novo Usuário</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4eee7;
+            color: #3e2c20;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #4b3023;
+            padding: 28px 16px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 45px;
+            color: white;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            display: block;
+            margin-top: 7px;
+            color: #d8c0aa;
+            font-size: 12px;
+        }
+
+        .menu {
+            list-style: none;
+        }
+
+        .menu li {
+            margin-bottom: 7px;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            padding: 14px 15px;
+            border-radius: 8px;
+            color: #e7d8ca;
+            text-decoration: none;
+            transition: .3s;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: #6b4734;
+            color: white;
+        }
+
+        .main {
+            margin-left: 250px;
+            padding: 32px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .topbar h2 {
+            color: #4b3023;
+            font-size: 28px;
+        }
+
+        .topbar p {
+            color: #8a6b56;
+            margin-top: 5px;
+        }
+
+        .user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #4b3023;
+        }
+
+        .user-avatar {
+            width: 43px;
+            height: 43px;
+            background: #8a5f43;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .form-container {
+            max-width: 900px;
+            background: #fffaf5;
+            border: 1px solid #eaded2;
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .form-title {
+            margin-bottom: 25px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid #eaded2;
+        }
+
+        .form-title h3 {
+            color: #4b3023;
+            font-size: 19px;
+        }
+
+        .form-title p {
+            color: #9a806c;
+            font-size: 13px;
+            margin-top: 6px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 13px;
+            color: #594235;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px 13px;
+            border: 1px solid #d8c0aa;
+            border-radius: 7px;
+            outline: none;
+            background: white;
+            color: #594235;
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #8a5f43;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eaded2;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-cancelar {
+            background: transparent;
+            border: 1px solid #d8c0aa;
+            color: #6b4734;
+        }
+
+        .btn-salvar {
+            background: #6b4734;
+            border: 1px solid #6b4734;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: .9;
+        }
+
+        @media (max-width: 800px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .sidebar {
+                width: 190px;
+            }
+
+            .main {
+                margin-left: 190px;
+                padding: 20px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h1>KI Books</h1>
+            <span>Sistema de gerenciamento</span>
+        </div>
+
+        <ul class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="usuarios.html" class="active">Usuários</a></li>
+            <li><a href="livros.html">Livros</a></li>
+            <li><a href="emprestimos.html">Empréstimos</a></li>
+            <li><a href="historico.html">Histórico</a></li>
+            <li><a href="multas.html">Multas</a></li>
+        </ul>
+
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <div>
+                <h2>Novo Usuário</h2>
+                <p>Cadastre um novo usuário na biblioteca</p>
+            </div>
+
+            <div class="user">
+                <strong>Administrador</strong>
+                <div class="user-avatar">KT</div>
+            </div>
+        </div>
+
+        <div class="form-container">
+
+            <div class="form-title">
+                <h3>Dados do usuário</h3>
+                <p>Preencha as informações abaixo para realizar o cadastro.</p>
+            </div>
+
+            <form>
+
+                <div class="form-grid">
+
+                    <div class="form-group full">
+                        <label for="nome">Nome completo</label>
+                        <input type="text" id="nome" name="nome" placeholder="Digite o nome completo">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cpf">CPF</label>
+                        <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dataNascimento">Data de nascimento</label>
+                        <input type="date" id="dataNascimento" name="dataNascimento">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" placeholder="exemplo@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefone">Telefone</label>
+                        <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="matricula">Matrícula</label>
+                        <input type="text" id="matricula" name="matricula" placeholder="Digite a matrícula">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tipo">Tipo de usuário</label>
+                        <select id="tipo" name="tipo">
+                            <option value="">Selecione</option>
+                            <option value="aluno">Aluno</option>
+                            <option value="professor">Professor</option>
+                            <option value="servidor">Servidor</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="endereco">Endereço</label>
+                        <input type="text" id="endereco" name="endereco" placeholder="Rua, número, bairro">
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+                    <a href="usuarios.html">
+                        <button type="button" class="btn btn-cancelar">Cancelar</button>
+                    </a>
+
+                    <button type="submit" class="btn btn-salvar">Cadastrar usuário</button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
