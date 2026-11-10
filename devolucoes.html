@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devoluções | KT Books</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f0eb;
+            color: #3e2c20;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 240px;
+            height: 100vh;
+            background: #3e2c20;
+            padding: 30px 20px;
+        }
+
+        .logo {
+            color: #f5eee7;
+            font-size: 26px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .menu a {
+            display: block;
+            text-decoration: none;
+            color: #e8ddd3;
+            padding: 14px 16px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: #6f503b;
+            color: white;
+        }
+
+        .content {
+            margin-left: 240px;
+            padding: 40px;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #806d5d;
+        }
+
+        .table-box {
+            background: white;
+            padding: 28px;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(62, 44, 32, 0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        th {
+            color: #6f503b;
+            text-align: left;
+            padding: 15px;
+            border-bottom: 2px solid #e8ddd3;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee5de;
+        }
+
+        .devolvido {
+            color: #5c7351;
+            font-weight: bold;
+        }
+
+        .pendente {
+            color: #b17a36;
+            font-weight: bold;
+        }
+
+        .atrasado {
+            color: #a34436;
+            font-weight: bold;
+        }
+
+        .btn-devolver {
+            background: #6f503b;
+            color: white;
+            border: none;
+            padding: 9px 14px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-devolver:hover {
+            background: #3e2c20;
+        }
+
+        .mensagem {
+            color: #806d5d;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 180px;
+            }
+
+            .content {
+                margin-left: 180px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            KT Books
+        </div>
+
+        <nav class="menu">
+
+            <a href="{% url 'index' %}">
+                Início
+            </a>
+
+            <a href="{% url 'usuarios' %}">
+                Usuários
+            </a>
+
+            <a href="{% url 'livros' %}">
+                Livros
+            </a>
+
+            <a href="{% url 'emprestimos' %}">
+                Empréstimos
+            </a>
+
+            <a href="{% url 'multas' %}">
+                Multas
+            </a>
+
+            <a href="{% url 'historico' %}">
+                Histórico
+            </a>
+
+            <a href="{% url 'devolucoes' %}" class="active">
+                Devoluções
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <main class="content">
+
+        <div class="header">
+
+            <h1>Devoluções</h1>
+
+            <p>
+                Gerencie os livros emprestados e registre suas devoluções.
+            </p>
+
+        </div>
+
+        <div class="table-box">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Usuário</th>
+                        <th>Livro</th>
+                        <th>Data do empréstimo</th>
+                        <th>Data prevista</th>
+                        <th>Status</th>
+                        <th>Ação</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for e in emprestimos %}
+
+                    <tr>
+
+                        <td>{{ e.usuario.nome }}</td>
+
+                        <td>{{ e.livro.titulo }}</td>
+
+                        <td>{{ e.data_emprestimo }}</td>
+
+                        <td>{{ e.data_prevista }}</td>
+
+                        <td>
+
+                            {% if e.data_devolucao %}
+
+                                <span class="devolvido">
+                                    Devolvido
+                                </span>
+
+                            {% elif e.atrasado %}
+
+                                <span class="atrasado">
+                                    Atrasado
+                                </span>
+
+                            {% else %}
+
+                                <span class="pendente">
+                                    Pendente
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {% if not e.data_devolucao %}
+
+                            <form method="POST" action="{% url 'registrar_devolucao' e.id %}">
+
+                                {% csrf_token %}
+
+                                <button type="submit" class="btn-devolver">
+                                    Registrar devolução
+                                </button>
+
+                            </form>
+
+                            {% else %}
+
+                                <span class="devolvido">
+                                    Concluído
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="6" class="mensagem">
+                            Nenhum empréstimo encontrado.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>
